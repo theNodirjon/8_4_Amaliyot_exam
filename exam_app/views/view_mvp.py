@@ -15,6 +15,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-class TeacherViewSet(viewsets.ModelViewSet):
-    queryset = Teacher.objects.all()
-    serializer_class = TeacherSerializer
+# class TeacherViewSet(viewsets.ModelViewSet):
+#     queryset = Teacher.objects.all()
+#     serializer_class = TeacherSerializer
