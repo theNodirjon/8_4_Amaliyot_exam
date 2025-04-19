@@ -1,19 +1,19 @@
-from django.contrib.auth.hashers import make_password
 from rest_framework import viewsets
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.hashers import make_password
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from configapp.models import Teacher
-from configapp.serializers import TeacherSerializer
+from ..models import Teacher
+from ..serializers import TeacherSerializer
 from ..serializers.teacher_serializer import TeacherSerializer, TeacherPostSerializer, TeacherUserSerializer
 from ..models import User
-from configapp.permissions import IsGetOrPatchOnly
-from configapp.pagination import TeacherPagination
+from ..permissions import IsGetOrPatchOnly
+from ..pagination import TeacherPagination
 
 
-class TeacherViewSet(viewsets.ModelViewSet):
+
+class TeacherApi(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = TeacherPagination
@@ -59,15 +59,16 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
 
 
-from configapp.pagination import TeacherPagination
-
-
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = TeacherPagination
 
-
+class TeacherAdminViewSet(viewsets.ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    pagination_class = TeacherPagination
+    permission_classes = [IsAdminUser]  # faqat admin
 
 
 

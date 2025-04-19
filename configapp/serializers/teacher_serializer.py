@@ -1,19 +1,21 @@
 from rest_framework import serializers
-from ..models import Student, User
-from . import UserSerializer
 
-class StudentSerializer(serializers.ModelSerializer):
+from . import UserSerializer
+from ..models import *
+
+class TeacherSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(read_only=True)
 
     class Meta:
-        model = Student
-        user = UserSerializer()  #Userga bog'lanish
-        fields = ['id', 'user', 'group']
+        model = Teacher
+        user = UserSerializer()
+        fields = ['id','user','departments','course','descriptions','subject']
 
         def create(self, validated_data):
             user_data = validated_data.pop('user')
             user = User.objects.create_user(**user_data)
-            student = Student.objects.create(user=user, **validated_data)
-            return student
+            teacher = Teacher.objects.create(user=user, **validated_data)
+            return teacher
 
         def update(self, instance, validated_data):
             user_data = validated_data.pop('user', None)
@@ -25,21 +27,21 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 
-
-class StudentUserSerializer(serializers.ModelSerializer):
+class TeacherUserSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField(read_only=True)
     is_staff = serializers.BooleanField(read_only=True)
-    is_teacher = serializers.BooleanField(read_only=False)
-    is_student = serializers.BooleanField(read_only=True)
     is_admin = serializers.BooleanField(read_only=True)
+    is_teacher = serializers.BooleanField(read_only=True)
+    is_student = serializers.BooleanField(read_only=True)
+
 
     class Meta:
         model = User
         fields = (
-            'id', 'phone_number', 'password', 'email', 'is_active', 'is_staff', 'is_admin', 'is_teacher', 'is_student',)
+            'id', 'phone_number', 'password', 'email', 'is_active', 'is_staff', 'is_admin', 'is_teacher', 'is_student')
 
 
 
-class StudentPostSerializer(serializers.Serializer):
-    user = StudentUserSerializer()
-    student = StudentSerializer()
+class TeacherPostSerializer(serializers.Serializer):
+    user = TeacherUserSerializer()
+    teacher = TeacherSerializer()
