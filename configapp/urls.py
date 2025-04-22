@@ -1,9 +1,10 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import *
-from .views.group_view import GroupViewSet
+from .views.group_view import *
 from .views.teacher_views import *
 from .views.student_view import *
+from .views.attendance_view import *
 
 router = DefaultRouter()
 router.register(r'teacher_api', TeacherApi, basename='teacher_api')
@@ -17,6 +18,7 @@ router.register(r'student_crud', StudentAdminViewSet, basename='student_crud')
 
 
 router.register(r'group', GroupViewSet, basename='group')
+router.register('davomat', AttendanceViewSet, basename='davomat')
 
 urlpatterns = [
     path('post_send_otp/', PhoneSendOTP.as_view()),
