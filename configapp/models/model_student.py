@@ -4,11 +4,18 @@ from .auth_users import User
 
 
 class Student(BaseModel):
+    # Student model: user bilan OneToOne va guruh bilan ForeignKey
+    STATUS_CHOICES = (
+        ("registered", "Ro'yxatdan o'tgan"),
+        ("studying", "O'qiyotgan"),
+        ("graduated", "Bitirib ketgan"),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone = models.CharField(max_length=15)
-    group = models.ManyToManyField(GroupStudent,related_name='get_student')
-    # descreptions = models.CharField(max_length=200,blank=True,null=True)
+    group = models.ManyToManyField('configapp.GroupStudent', related_name='get_student', blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="registered")
 
 
     def __str__(self):
-        return self.user.phone_number
+        return f"{self.user.username} ({self.status})"

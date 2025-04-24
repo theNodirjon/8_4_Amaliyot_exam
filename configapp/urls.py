@@ -2,6 +2,8 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import *
 from .views.group_view import *
+from .views.lesson_view import LessonViewSet
+from .views.pay_view import PaymentViewSet
 from .views.teacher_views import *
 from .views.student_view import *
 from .views.attendance_view import *
@@ -19,6 +21,8 @@ router.register(r'student_crud', StudentAdminViewSet, basename='student_crud')
 
 router.register(r'group', GroupViewSet, basename='group')
 router.register('davomat', AttendanceViewSet, basename='davomat')
+router.register('payments', PaymentViewSet, basename='payments')
+router.register('lessons', LessonViewSet, basename='lessons')
 
 urlpatterns = [
     path('post_send_otp/', PhoneSendOTP.as_view()),
@@ -29,17 +33,3 @@ urlpatterns = [
     path('', include(router.urls)),
 ]
 
-
-'''
-Student yaratish: json
-
-POST /api/students_cdud/  # 3/ 
-
-{
-  "user": {
-    "username": "student1",
-    "password": "1234"
-  },
-  "phone": "+998901234567"
-}
-'''

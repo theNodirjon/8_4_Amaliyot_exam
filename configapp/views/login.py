@@ -36,6 +36,7 @@ class PhoneSendOTP(APIView):
     @swagger_auto_schema(request_body=SMSSerializer)
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('phone_number')
+
         if phone_number:
             phone = str(phone_number)
             user = User.objects.filter(phone_number__iexact=phone)
@@ -53,11 +54,9 @@ class PhoneSendOTP(APIView):
                     return Response({'message': "SMS sent successfully"}, status=status.HTTP_200_OK)
                 return Response({'message': "SMS sent Failed"}, status=status.HTTP_400_BAD_REQUEST)
 
-
 def send_otp():
     otp = str(random.randint(1001, 999900))
     return otp
-
 
 class VerifySMS(APIView):
     @swagger_auto_schema(request_body=VerifySMSSerializer)

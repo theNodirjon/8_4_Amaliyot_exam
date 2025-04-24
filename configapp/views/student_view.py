@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import status, viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
 from ..models import Student, User
 from ..serializers import StudentSerializer, StudentUserSerializer, StudentPostSerializer
@@ -55,6 +55,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     pagination_class = StudentPagination
+    permission_classes = [IsAuthenticated]
 
 
 class StudentAdminViewSet(viewsets.ModelViewSet):

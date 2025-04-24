@@ -4,7 +4,7 @@ from . import UserSerializer
 from ..models import *
 
 class TeacherSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(read_only=True)
+    user = serializers.StringRelatedField()  # Foydalanuvchi ismini chiqaradi
 
     class Meta:
         model = Teacher

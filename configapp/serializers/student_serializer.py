@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from ..models import Student, User
 from . import UserSerializer
+from .group_serializer import GroupStudentSerializer
 
 class StudentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField() # Foydalanuvchi ismini chiqaradi
+    group = GroupStudentSerializer()
 
     class Meta:
         model = Student
@@ -23,9 +26,6 @@ class StudentSerializer(serializers.ModelSerializer):
                     user_serializer.save()
             return super().update(instance, validated_data)
 
-
-
-
 class StudentUserSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField(read_only=True)
     is_staff = serializers.BooleanField(read_only=True)
@@ -37,8 +37,6 @@ class StudentUserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'phone_number', 'password', 'email', 'is_active', 'is_staff', 'is_admin', 'is_teacher', 'is_student',)
-
-
 
 class StudentPostSerializer(serializers.Serializer):
     user = StudentUserSerializer()

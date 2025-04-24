@@ -1,15 +1,15 @@
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.contrib.auth.hashers import make_password
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
-from ..models import Teacher
+from ..models import Teacher, Student
 from ..serializers import TeacherSerializer
 from ..serializers.teacher_serializer import TeacherSerializer, TeacherPostSerializer, TeacherUserSerializer
 from ..models import User
 from ..permissions import IsGetOrPatchOnly
 from ..pagination import TeacherPagination
+from rest_framework.decorators import action
 
 
 
@@ -63,6 +63,27 @@ class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = TeacherPagination
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        # Agar foydalanuvchi teacher bo‘lsa, faqat o‘z guruhidagi studentlarni ko‘rsatadi
+        if hasattr(user, 'teacher'):
+            group = user.teacher.group
+            return Student.objects.filter(group=group)
+        return Student.objects.all()
+
+    # Teacher faqat o'z guruhini ko'rishi uchun custom action
+    @action(detail=False, methods=['get'])
+    def my_group_students(self, request):
+        user = request.user
+        if hasattr(user, 'teacher'):
+            group = user.teacher.group
+            students = Student.objects.filter(group=group)
+            serializer = self.get_serializer(students, many=True)
+            return Response(serializer.data)
+        return Response({"detail": "Siz teacher emassiz."}, status=403)
+
 
 class TeacherAdminViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
