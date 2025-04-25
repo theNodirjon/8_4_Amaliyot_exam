@@ -1,14 +1,18 @@
-from rest_framework import viewsets
+from ..dekoratir import registr_amalga_oshgan
 from ..models.model_pay import Payment
 from ..serializers.pay_serializer import PaymentSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import viewsets
+
 
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated]
+
+    @registr_amalga_oshgan  #avtorizatsiya talab qiladi
 
     # O‘quvchi o‘zining to‘lov tarixini ko‘rishi uchun endpoint
     @action(detail=False, methods=['get'])
