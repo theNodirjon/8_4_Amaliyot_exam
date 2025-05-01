@@ -54,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.phone_number
+        return f"{self.phone_number} - {self.is_admin} - {self.is_student} - {self.is_teacher} - {self.is_active} -{self.is_staff}"
 
     @property
     def is_superuser(self):
