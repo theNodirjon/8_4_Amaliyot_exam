@@ -57,6 +57,11 @@ class StudentViewSet(viewsets.ModelViewSet):
     pagination_class = StudentPagination
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(tags=['Students'])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+
 
 class StudentAdminViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()

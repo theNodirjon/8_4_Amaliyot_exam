@@ -58,13 +58,13 @@ class TeacherApi(viewsets.ModelViewSet):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 
-
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = TeacherPagination
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(tags=['Teacher'])
     def get_queryset(self):
         user = self.request.user
         # Agar foydalanuvchi teacher bo‘lsa, faqat o‘z guruhidagi studentlarni ko‘rsatadi

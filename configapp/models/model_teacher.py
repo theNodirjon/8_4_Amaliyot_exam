@@ -1,6 +1,20 @@
 from django.db import models
 from rest_framework import filters
 from .auth_users import *
+from django.contrib.admin import SimpleListFilter
+
+class TeacherUserFilter(SimpleListFilter):
+    title = 'User (teachers only)'
+    parameter_name = 'user'
+
+    def lookups(self, request, model_admin):
+        teachers = User.objects.filter(teacher__isnull=False)
+        return [(user.id, str(user)) for user in teachers]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(user__id=self.value())
+        return queryset
 
 
 # Markazda oqitiladigan fanlar
@@ -25,8 +39,8 @@ class Departments(BaseModel):
 
 # Xodimlarning datalarini saqlash uchun yuqoridagi Course va Departments modellari Worker bog'langan
 class Teacher(BaseModel):
-    user = models.OneToOneField(User, on_delete=models.RESTRICT,related_name="user")
-    groups = models.ManyToManyField('configapp.GroupStudent', related_name='get_teachers')
+    user = models.OneToOneField(User, on_delete=models.RESTRICT,related_name="teacher")
+    groups = models.ManyToManyField('configapp.GroupStudent', max_length=500, related_name='get_teachers')
     # departments = models.ManyToManyField(Departments, related_name='get_department')
     course = models.ManyToManyField(Course, related_name='get_course')
     descriptions = models.CharField(max_length=500, blank=True, null=True)

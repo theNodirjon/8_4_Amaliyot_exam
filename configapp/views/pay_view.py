@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from ..dekoratir import registr_amalga_oshgan
 from ..models.model_pay import Payment
 from ..serializers.pay_serializer import PaymentSerializer
@@ -13,6 +14,9 @@ class PaymentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     @registr_amalga_oshgan  #avtorizatsiya talab qiladi
+    @swagger_auto_schema(tags=['Pyment'])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     # O‘quvchi o‘zining to‘lov tarixini ko‘rishi uchun endpoint
     @action(detail=False, methods=['get'])

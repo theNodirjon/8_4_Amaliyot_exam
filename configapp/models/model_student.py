@@ -18,4 +18,4 @@ class Student(BaseModel):
 
 
     def __str__(self):
-        return f"{self.user.phone_number} ({self.status})"
+        return f"{self.user.phone_number}"

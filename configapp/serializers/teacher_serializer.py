@@ -9,7 +9,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         user = UserSerializer()
-        fields = ['id','user','departments','course','descriptions','subject']
+        fields = ['id','user','course','descriptions','subject']
 
         def create(self, validated_data):
             user_data = validated_data.pop('user')
@@ -30,9 +30,9 @@ class TeacherSerializer(serializers.ModelSerializer):
 class TeacherUserSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField(read_only=True)
     is_staff = serializers.BooleanField(read_only=True)
-    is_admin = serializers.BooleanField(read_only=True)
+    is_admin = serializers.BooleanField(read_only=False)
     is_teacher = serializers.BooleanField(read_only=True)
-    is_student = serializers.BooleanField(read_only=True)
+    is_student = serializers.BooleanField(read_only=False)
 
 
     class Meta:
