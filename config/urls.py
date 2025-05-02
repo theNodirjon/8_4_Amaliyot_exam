@@ -18,7 +18,7 @@ permission_classes=(permissions.AllowAny,),
 
 )
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('api/', include('configapp.urls')),
     path('tokenref', TokenRefreshView.as_view(), name='token'),
     path('tokenac', TokenBlacklistView.as_view(), name='token'),
