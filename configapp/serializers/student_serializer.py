@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models import Student, User
-from . import UserSerializer
+from .user_serializer import UserSerializer
 from .group_serializer import GroupStudentSerializer
 
 class StudentSerializer(serializers.ModelSerializer):
