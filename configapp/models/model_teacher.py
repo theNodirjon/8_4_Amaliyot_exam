@@ -28,13 +28,14 @@ class Course(BaseModel):
 
 # Xodimlarning darajasini belgilash uchun
 class Departments(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
     descriptions = models.CharField(max_length=500, null=True, blank=True)
 
 
     def __str__(self):
-        return self.title
+        return f"{self.user.description}"
 
 
 # Xodimlarning datalarini saqlash uchun yuqoridagi Course va Departments modellari Worker bog'langan
