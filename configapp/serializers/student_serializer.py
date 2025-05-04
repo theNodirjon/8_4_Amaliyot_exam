@@ -28,10 +28,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
 class StudentUserSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField(read_only=True)
-    is_staff = serializers.BooleanField(read_only=True)
+    is_staff = serializers.BooleanField(read_only=False)
     is_teacher = serializers.BooleanField(read_only=False)
     is_student = serializers.BooleanField(read_only=True)
-    is_admin = serializers.BooleanField(read_only=True)
+    is_admin = serializers.BooleanField(read_only=False)
 
     class Meta:
         model = User
