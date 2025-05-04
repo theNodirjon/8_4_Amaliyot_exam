@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from . import StudentSerializer
+from .student_serializer import StudentSerializer
 from ..models import model_group,model_teacher
 from .teacher_serializer import *
 
