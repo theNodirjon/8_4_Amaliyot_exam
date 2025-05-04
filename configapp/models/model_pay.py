@@ -8,4 +8,4 @@ class Payment(models.Model):
     payment_date = models.DateField()
 
     def __str__(self):
-        return f"{self.student} - {self.amount} so‘m - {self.date}"
+        return f"{self.student} - {self.amount} so‘m - {self.payment_date}"

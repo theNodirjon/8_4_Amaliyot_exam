@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from ..models.model_pay import Payment
-from ..models.model_student import Student
+
 
 class PaymentSerializer(serializers.ModelSerializer):
-    student = serializers.StringRelatedField()  # Foydalanuvchi nomi chiqadi
+    student = serializers.StringRelatedField()  # faqat o‘qish uchun
 
     class Meta:
         model = Payment

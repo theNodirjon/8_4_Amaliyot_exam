@@ -13,17 +13,22 @@ class PaymentViewSet(viewsets.ModelViewSet):
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated]
 
-    @registr_amalga_oshgan  #avtorizatsiya talab qiladi
-    @swagger_auto_schema(tags=['Pyment'])
+    @registr_amalga_oshgan
+    @swagger_auto_schema(tags=['Payment'])
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    # O‘quvchi o‘zining to‘lov tarixini ko‘rishi uchun endpoint
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    @swagger_auto_schema(
+        operation_description="Foydalanuvchi o‘ziga tegishli barcha to‘lovlarni ko‘rishi.",
+        tags=['Payment']
+    )
     def my_payments(self, request):
+        # Auth user bilan bog‘langan studentni olamiz
         student = getattr(request.user, 'student', None)
-        if student is not None:
-            payments = Payment.objects.filter(student=student)
-            serializer = self.get_serializer(payments, many=True)
-            return Response(serializer.data)
-        return Response({"detail": "Siz student emassiz."}, status=403)
+        if student is None:
+            return Response({"detail": "Siz student emassiz."}, status=403)
+
+        payments = Payment.objects.filter(student=student)
+        serializer = self.get_serializer(payments, many=True)
+        return Response(serializer.data)

@@ -20,9 +20,9 @@ router.register(r'student_crud', StudentAdminViewSet, basename='student_crud')
 
 
 router.register(r'group', GroupViewSet, basename='group')
-router.register('davomat', AttendanceViewSet, basename='davomat')
-router.register('payments', PaymentViewSet, basename='payments')
-router.register('lessons', LessonViewSet, basename='lessons')
+router.register(r'davomat', AttendanceViewSet, basename='davomat')
+router.register(r'payments', PaymentViewSet, basename='payments')
+router.register(r'lessons', LessonViewSet, basename='lessons')
 
 urlpatterns = [
     path('post_send_otp/', PhoneSendOTP.as_view()),

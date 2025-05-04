@@ -16,7 +16,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('user', 'descriptions', 'subject')
+    list_display = ('user', 'descriptions', 'subject',)
     list_filter = (TeacherUserFilter, 'descriptions', 'subject')
     search_fields = ('phone_number',)
 
@@ -27,5 +27,5 @@ class StudentAdmin(admin.ModelAdmin):
     search_fields = ('phone_number',)
 
     def get_groups(self, obj):
-        return ", ".join([str(group.name) for group in obj.group.all()])
+        return ", ".join([str(group.title) for group in obj.group.all()])
     get_groups.short_description = 'Groups'
