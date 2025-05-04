@@ -7,6 +7,7 @@ from .views.pay_view import PaymentViewSet
 from .views.teacher_views import *
 from .views.student_view import *
 from .views.attendance_view import *
+from .views.test_view import TestApi
 
 router = DefaultRouter()
 router.register(r'teacher_api', TeacherApi, basename='teacher_api')
@@ -30,6 +31,7 @@ urlpatterns = [
     path('register/', RegisterUserApi.as_view()),
     path('token/', LoginApi.as_view(), name='token'),
     path('teacher/create/', TeacherCreateApi.as_view(), name='teacher-create'),
+    path('random_number/', TestApi.as_view(), name='random-number' ),
     path('', include(router.urls)),
 ]
 
