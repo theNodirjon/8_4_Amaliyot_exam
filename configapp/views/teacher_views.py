@@ -7,7 +7,6 @@ from ..models import Teacher, Student
 from ..serializers import TeacherSerializer
 from ..serializers.teacher_serializer import TeacherSerializer, TeacherPostSerializer, TeacherUserSerializer
 from ..models import User
-from ..permissions import IsGetOrPatchOnly
 from ..pagination import TeacherPagination
 from rest_framework.decorators import action
 
@@ -17,7 +16,7 @@ class TeacherApi(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = TeacherPagination
-    permission_classes = [IsGetOrPatchOnly]
+    permission_classes = [IsAdminUser]
 
     def get_serializer_class(self):
         data={'success':True}
