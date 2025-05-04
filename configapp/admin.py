@@ -1,9 +1,10 @@
 from re import search
 from django.contrib import admin
 from .models import *
+from .models.model_pay import Payment
 
 # Register your models here.
-admin.site.register([Departments,Course,GroupStudent,Attendance])
+admin.site.register([Departments,Course,GroupStudent,Attendance,Payment])
 
 
 @admin.register(User)
