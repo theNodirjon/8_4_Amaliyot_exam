@@ -26,12 +26,12 @@ class Course(BaseModel):
         return self.title
 
 
-# # Xodimlarning darajasini belgilash uchun
-# class Departments(BaseModel):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     title = models.CharField(max_length=50)
-#     is_active = models.BooleanField(default=True)
-#     descriptions = models.CharField(max_length=500, null=True, blank=True)
+# Xodimlarning darajasini belgilash uchun
+class Departments(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    title = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    descriptions = models.CharField(max_length=500, null=True, blank=True)
 
 
     def __str__(self):
